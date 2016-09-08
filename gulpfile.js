@@ -50,7 +50,7 @@ gulp.task('html', function() {
 });
 
 gulp.task('styles', function() {
-  return gulp.src(['public/scss/main.scss'])
+  return gulp.src(['./public/scss/main.scss'])
     .pipe(compass({
       css: './public/scss/css',
       sass: './public/scss',
@@ -64,11 +64,11 @@ gulp.task('styles', function() {
       suffix: '.min'
     }))
     .pipe(sourcemaps.write())
-    .pipe(gulp.dest('./.tmp/css'));
+    .pipe(gulp.dest('./public/scss/css'));
 });
 
 gulp.task('scripts', ['lint'], function() {
-  return gulp.src('public/js/**/*.js')
+  return gulp.src('./public/js/**/*.js')
     // .pipe(concat('main.js'))
     // .pipe(gulp.dest('./public/js/min'))
     .pipe(changed('./public/js/**/*.js'))
@@ -78,19 +78,19 @@ gulp.task('scripts', ['lint'], function() {
     }))
     .pipe(uglify())
     .pipe(sourcemaps.write())
-    .pipe(gulp.dest('./.tmp/js'));
+    .pipe(gulp.dest('./public/js/min'));
 });
 
 gulp.task('inject', function() {
   var wiredep = require('wiredep').stream;
   var inject = require('gulp-inject');
 
-  var injectSrc = gulp.src(['./.tmp/css/*.css', './.tmp/js/*.js', './.tmp/js/**/*.js'], {
+  var injectSrc = gulp.src(['./public/scss/css/*.min.css', './public/js/min/*.js', './public/js/min/**/*.js'], {
     empty: true,
     read: false
   });
   var injectOptions = {
-    ignorePath: '/.tmp/'
+    ignorePath: '/public'
   };
 
   var wireDepOptions = {
