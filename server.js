@@ -25,9 +25,8 @@ app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.use(express.static('public/'));
+app.use(express.static('public'));
 app.use(express.static('src/views'));
-app.use(express.static('.tmp'));
 
 // mongoose.Promise = global.Promise;
 // mongoose.connection.on('open', function() {
