@@ -241,7 +241,7 @@ gulp.task('inject:build', ['scripts:build'], function() {
 });
 
 gulp.task('build', ['inject:build'], function() {
-  gulp.src(['server.js', 'config.js', 'run_local.sh', 'run_dev3.sh', 'run_prod1.sh'])
+  gulp.src(['server.js', 'config.js', 'Procfile'])
   .pipe(gulp.dest('./prod'))
   gulp.src('public/img/**/*')
   .pipe(gulp.dest('./prod/public/img'))
