@@ -64,7 +64,7 @@ gulp.task('styles', function() {
       suffix: '.min'
     }))
     .pipe(sourcemaps.write())
-    .pipe(gulp.dest('./public/scss/css'));
+    .pipe(gulp.dest('./public/static/css'));
 });
 
 gulp.task('scripts', ['lint'], function() {
@@ -78,14 +78,14 @@ gulp.task('scripts', ['lint'], function() {
     }))
     .pipe(uglify())
     .pipe(sourcemaps.write())
-    .pipe(gulp.dest('./public/js/min'));
+    .pipe(gulp.dest('./public/static/js'));
 });
 
 gulp.task('inject', function() {
   var wiredep = require('wiredep').stream;
   var inject = require('gulp-inject');
 
-  var injectSrc = gulp.src(['./public/scss/css/*.min.css', './public/js/min/*.js', './public/js/min/**/*.js'], {
+  var injectSrc = gulp.src(['./public/static/css/*.min.css', './public/static/js/*.js', './public/static/js/**/*.js'], {
     empty: true,
     read: false,
     // ignorePath: './public/',
@@ -110,7 +110,7 @@ gulp.task('inject', function() {
 });
 
 gulp.task('clean', function() {
-  return gulp.src(['./.tmp', './prod'], {read: false})
+  return gulp.src(['public/js/min', 'public/scss/css'], {read: false})
     .pipe(clean());
 });
 
