@@ -87,10 +87,13 @@ gulp.task('inject', function() {
 
   var injectSrc = gulp.src(['./public/scss/css/*.min.css', './public/js/min/*.js', './public/js/min/**/*.js'], {
     empty: true,
-    read: false
+    read: false,
+    // ignorePath: './public/',
+    // cwd: __dirname + '/public/'
   });
   var injectOptions = {
-    ignorePath: '/public'
+    ignorePath: 'public',
+    addRootSlash: false
   };
 
   var wireDepOptions = {
