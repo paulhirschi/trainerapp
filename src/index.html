@@ -22,7 +22,6 @@
   <!-- endbower -->
   <!-- inject:js -->
   <script src="js/min/app.min.js"></script>
-  <script src="js/min/services/authentication.service.min.js"></script>
   <script src="js/min/controllers/dashboardView.controller.min.js"></script>
   <script src="js/min/controllers/help.controller.min.js"></script>
   <script src="js/min/controllers/login.controller.min.js"></script>
@@ -30,19 +29,11 @@
   <script src="js/min/controllers/mystats.controller.min.js"></script>
   <script src="js/min/controllers/notifications.controller.min.js"></script>
   <script src="js/min/controllers/settings.controller.min.js"></script>
+  <script src="js/min/services/authentication.service.min.js"></script>
   <!-- endinject -->
   <script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
-
   <section ui-view class="the-view"></section>
-
-  
-  <script>
-    var socket = io.connect('/');
-    socket.on('tweet', function(tweet) {
-      console.log(tweet);
-    });
-  </script>
 </body>
 </html>

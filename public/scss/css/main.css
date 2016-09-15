@@ -548,10 +548,8 @@ th {
 
 html,
 body,
-.container,
 .the-view {
   height: 100%;
-  width: 100%;
 }
 
 body {
@@ -660,49 +658,70 @@ h4 {
   top: 0;
 }
 
-.navigation-main {
+nav#dashboard-navigation {
   float: left;
   clear: none;
   width: 20%;
   margin-left: 0;
   margin-right: 0;
-  display: inline-block;
   height: 100%;
   background-color: gray;
   color: #FDFEFE;
 }
-.navigation-main ul {
-  padding: 0;
-  margin: 0;
-}
-.navigation-main ul li a {
+nav#dashboard-navigation a {
   display: block;
   padding: 15px 0 15px 60px;
   text-decoration: none;
   color: inherit;
   transition: 0.3s;
 }
-.navigation-main ul li a:hover {
+nav#dashboard-navigation a:first-child {
+  padding: 0;
+}
+nav#dashboard-navigation a:first-child:hover {
+  background-color: transparent;
+}
+nav#dashboard-navigation a:hover {
   background-color: darkgray;
   cursor: pointer;
   border: none;
 }
-.navigation-main ul li a.active {
+nav#dashboard-navigation a.active {
   color: darkgray;
   box-shadow: inset  -10px 0px 0px -5px darkgray;
 }
-.navigation-main ul li a.active:hover {
+nav#dashboard-navigation a.active:hover {
   background-color: gray;
 }
-.navigation-main ul li .nav-logout:hover {
+nav#dashboard-navigation .nav-logout:hover {
   background-color: tomato;
 }
 
-.nav-logo-mark {
-  text-align: center;
-  padding: 0.5rem;
-}
 .nav-logo-mark img {
-  width: 50%;
+  width: 100%;
   margin: 0 auto;
+}
+
+#dashboard-header {
+  float: left;
+  clear: none;
+  width: 80%;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.dashboard-child-view {
+  float: left;
+  clear: none;
+  width: 80%;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+footer {
+  float: left;
+  clear: none;
+  width: 80%;
+  margin-left: 0;
+  margin-right: 0;
 }

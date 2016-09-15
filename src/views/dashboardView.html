@@ -1,10 +1,12 @@
-<header id="dashboard-header">
-  <p>here be ye the header</p>
-</header>
+
 <nav id="dashboard-navigation">
+  <a ui-sref="dashboardView.myplan" class="nav-logo-mark"><img src="img/johnny-five.png"></a>
   <a data-ng-repeat="navItem in dashboardView.navigation" ui-sref="{{navItem.state}}({user: dashboardView.user})" data-ng-class="{active: dashboardView.state.current.name === navItem.state}">{{navItem.label}}</a>
   <a ui-sref="login">Logout</a>
 </nav>
+<header id="dashboard-header">
+  <p>here be ye the header</p>
+</header>
 <section ui-view class="dashboard-child-view"></section>
 <footer>
   <p>here be ye the footer</p>

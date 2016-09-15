@@ -33,6 +33,33 @@ var notifyInfo = {
 //   })
 // };
 
+gulp.task('browser-sync', ['nodemon'], function() {
+  browserSync.init({
+    proxy: "localhost:9000",
+    sw: true
+  });
+});
+
+gulp.task('nodemon', function(cb) {
+  var started = false;
+  var options = {
+    script: 'server.js',
+    delayTime: 1,
+    env: {
+      'NODE_ENV': 'development',
+      'PORT': 9000
+    },
+    watch: jsFiles
+  };
+  
+  return nodemon(options)
+    .on('start', function() {
+      if(!started) {
+        cb();
+        started = true;
+      }
+    });
+});
 
 gulp.task('lint', function() {
   return gulp.src(jsFiles)
@@ -81,15 +108,13 @@ gulp.task('scripts', ['lint'], function() {
     .pipe(gulp.dest('./public/js/min'));
 });
 
-gulp.task('inject', function() {
+gulp.task('inject', ['scripts', 'styles'], function() {
   var wiredep = require('wiredep').stream;
   var inject = require('gulp-inject');
 
   var injectSrc = gulp.src(['./public/scss/css/*.min.css', './public/js/min/*.js', './public/js/min/**/*.js'], {
     empty: true,
     read: false,
-    // ignorePath: './public/',
-    // cwd: __dirname + '/public/'
   });
   var injectOptions = {
     ignorePath: 'public',
@@ -106,23 +131,24 @@ gulp.task('inject', function() {
     // .pipe(changed('ocpclient'))
     .pipe(wiredep(wireDepOptions))
     .pipe(inject(injectSrc, injectOptions))
-    .pipe(gulp.dest('./src'));
+    .pipe(gulp.dest('./src'))
+    .pipe(browserSync.stream());
 });
 
-gulp.task('clean', function() {
-  return gulp.src(['./.tmp', './prod'], {read: false})
-    .pipe(clean());
-});
+// gulp.task('clean', function() {
+//   return gulp.src(['./.tmp', './prod'], {read: false})
+//     .pipe(clean());
+// });
 
-gulp.task('clean:css', function() {
-  return gulp.src('./.tmp/css', {read: false})
-    .pipe(clean());
-});
+// gulp.task('clean:css', function() {
+//   return gulp.src('./.tmp/css', {read: false})
+//     .pipe(clean());
+// });
 
-gulp.task('clean:js', function() {
-  return gulp.src('./.tmp/js/', {read: false})
-    .pipe(clean());
-});
+// gulp.task('clean:js', function() {
+//   return gulp.src('./.tmp/js/', {read: false})
+//     .pipe(clean());
+// });
 
 gulp.task('live', function() {
 
@@ -134,13 +160,13 @@ gulp.task('live', function() {
   // });
 
   // watch .html files
-  gulp.watch('src/**/*.html');
+  gulp.watch('src/**/*.html').on('change', browserSync.reload);
 
   //watch .scss files
-  gulp.watch('public/scss/**/*.scss', ['clean:css', 'styles', 'inject']);
+  gulp.watch('public/scss/**/*.scss', ['styles', 'inject']);
 
   //watch .js files
-  gulp.watch('public/js/**/*.js', ['clean:js', 'lint', 'scripts', 'inject']);
+  gulp.watch('public/js/**/*.js', ['lint', 'scripts', 'inject']);
 
   // gulp.watch(['src/**/*.html', 'public/css/main.min.css', 'public/js/min/**/*.js']).on('change', browserSync.reload);
 
@@ -156,22 +182,8 @@ gulp.task('live', function() {
   // });
 });
 
-gulp.task('serve', ['clean', 'lint', 'styles', 'scripts', 'inject', 'live'], function() {
+gulp.task('serve', ['lint', 'inject', 'browser-sync', 'live'], function() {
 
-  var options = {
-    script: 'server.js',
-    delayTime: 1,
-    env: {
-      'NODE_ENV': 'local',
-      'PORT': 9000
-    },
-    watch: jsFiles
-  };
-  
-  return nodemon(options)
-    .on('restart', function(ev) {
-      console.log('Restarting...');
-    });
 });
 
 // BUILD TASK
